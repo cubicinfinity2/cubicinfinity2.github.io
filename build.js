@@ -6,7 +6,7 @@ const fs = require("fs")
 
 const TARGET_DATE = process.argv[2]
 
-const html = fs.readFileSync("secret_page/page.html", "utf8")
+const html = fs.readFileSync("secret_page/inline.html", "utf8")
 
 const keyBytes = crypto.pbkdf2Sync(TARGET_DATE, Buffer.from([42]), 1, 32, "sha256")
 
