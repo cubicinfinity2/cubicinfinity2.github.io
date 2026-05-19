@@ -1,14 +1,6 @@
-const EXPECTED_HASH = "REPLACE_WITH_OUTPUT_FROM_BUILD_SCRIPT"
+const EXPECTED_HASH = "13387e7ebe8633ac4689973054ba16df67c28a8638fbde05d6629dbe556cc988"
 
 const IV_LENGTH = 12
-
-function getDateString() {
-  const now = new Date()
-  const y = now.getFullYear()
-  const m = String(now.getMonth() + 1).padStart(2, "0")
-  const d = String(now.getDate()).padStart(2, "0")
-  return `${y}${m}${d}`
-}
 
 async function sha256hex(str) {
   const bytes = new TextEncoder().encode(str)
@@ -36,13 +28,15 @@ async function deriveKey(dateStr) {
 }
 
 async function tryUnlock() {
-  const dateStr = getDateString()
+  const date = document.getElementById('date').value;
+  console.log(date)
 
-  const hash = await sha256hex(dateStr)
-
+  const hash = await sha256hex(date)
+  console.log(hash)
   if (hash !== EXPECTED_HASH) return
+  console.log("hash matches")
 
-  const key = await deriveKey(dateStr)
+  const key = await deriveKey(date)
 
   const response = await fetch("page.enc")
   const buffer = await response.arrayBuffer()
@@ -64,5 +58,3 @@ async function tryUnlock() {
   document.write(html)
   document.close()
 }
-
-tryUnlock()
