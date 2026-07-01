@@ -29,12 +29,9 @@ async function deriveKey(dateStr) {
 
 async function tryUnlock() {
   const date = document.getElementById('date').value;
-  console.log(date)
 
   const hash = await sha256hex(date)
-  console.log(hash)
   if (hash !== EXPECTED_HASH) return
-  console.log("hash matches")
 
   const key = await deriveKey(date)
 
